@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Countries</title>
+    <style>
+        /* Cool animations when the page loads */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-image: url('globe/bgDesign.png');
+            background-size: cover;       /* Cover entire screen */
+            background-repeat: no-repeat; /* Prevent tiling */
+            background-position: center;  /* Center the image */
+        }
+
+        nav {
+            background: linear-gradient(90deg, #00000046, #00000046);
+            border: 4px solid #f5e282;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(223, 207, 65, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            background-color: rgba(236, 217, 108, 0.973);
+            transform: scale(1.1);
+        }
+
+        section {
+            padding: 40px;
+            margin: 20px;
+            background-color: rgba(61, 85, 85, 0.486);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(235, 207, 48, 0.1);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .country-card {
+            border: 3px solid #f8fcca;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+        }
+
+        .country-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(32, 252, 3, 0.562);
+            border-color: #27f114;
+        }
+
+        .country-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .country-card:hover .country-image {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #e3ebb7;
+            text-align: center;
+            font-size: 4.5em;
+            margin-bottom: 30px;
+        }
+        h3 {
+            color: #f5f380;
+            text-align: center;
+            font-size: 2.5em;
+        }
+        h4 {
+            color: #e3ebb7;
+            text-align: center;
+            font-size: 2.5em;
+        }
+           
+        .fact-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .fact-list li {
+            margin: 10px 0;
+            padding: 5px;
+            color: #fdf9f9;
+        }
+
+        .highlight {
+            background-repeat: no-repeat;
+            background-size: 100% 0.2em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+            -webkit-text-fill-color: white;
+        }
+
+        .highlight:hover {
+            background-size: 100% 88%;
+        }
+
+        /* New styles for heart button */
+        .heart-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .heart-button:hover {
+            transform: scale(1.2);
+        }
+
+        .heart-button.favorited {
+            color: red;
+        }
+
+        #favorites-section {
+            background-color: rgba(61, 85, 85, 0.6);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+        }
+
+        #contact-section {
+            background-color: rgba(61, 85, 85, 0.6);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+        }
+
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .contact-form input, 
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid #f5f380;
+            color: rgb(0, 0, 0);
+        }
+
+        .contact-form button {
+            background-color: #f7f584;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #17ec17;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#countries">Countries</a></li>
+            <li><a href="#favorites">Favorites</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <img src="globe/explore1.png" alt="World Travel" style="width: 100%; border-radius: 15px; margin-top: 20px;">
+    </section>
+
+    <section id="countries">
+        <h1> Must-Visit Countries </h1>
+        <div class="country-grid">
+            <div class="country-card">
+                <img src="globe/japanfood.jpg" alt="Japan" class="country-image">
+                <img src="globe/japan.jpg" alt="Japan" class="country-image">
+                <img src="globe/japanplace.jpg" alt="Japan" class="country-image">
+                <h3>Japan 🗾</h3>
+                <ul class="fact-list">
+                    <li>🍜 Amazing Food Culture</li>
+                    <li>🌸 Beautiful Cherry Blossoms</li>
+                    <li>🚅 Advanced Technology</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/italyart.jpg" alt="Italy" class="country-image">
+                <img src="globe/italyfood.jpeg" alt="Italy" class="country-image">
+                <img src="globe/italyarchitecture.jpg!d" alt="Italy" class="country-image">
+                <h3>Italy 🍕</h3>
+                <ul class="fact-list">
+                    <li>🎨 Rich Art History</li>
+                    <li>🍝 Delicious Cuisine</li>
+                    <li>⛪ Historic Architecture</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/Australiabeach" alt="Australia" class="country-image">
+                <img src="globe/Australiakoala" alt="Australia" class="country-image">
+                <img src="globe/Australicorals.jpg" alt="Australia" class="country-image">
+                <h3>Australia 🦘</h3>
+                <ul class="fact-list">
+                    <li>🏖️ Beautiful Beaches</li>
+                    <li>🐨 Unique Wildlife</li>
+                    <li>🏊‍♂️ Great Barrier Reef</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/francePastries" alt="France" class="country-image">
+                <img src="globe/franceMuseum.jpg" alt="France" class="country-image">
+                <img src="globe/franceWine.jpg" alt="France" class="country-image">
+                <h3>France 🗼</h3>
+                <ul class="fact-list">
+                    <li>🥖 Amazing Pastries</li>
+                    <li>🎨 World-Class Museums</li>
+                    <li>🍷  Wine Country</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/newZealandMT.jpg" alt="New Zealand" class="country-image">
+                <img src="globe/newZealandLOTR.jpg" alt="New Zealand" class="country-image">
+                <img src="globe/newZealandHike.jpg" alt="New Zealand" class="country-image">
+                <h3>New Zealand 🥝</h3>
+                <ul class="fact-list">
+                    <li>🌋 Volcanic Landscapes</li>
+                    <li>🧝‍♂️ Lord of the Rings Sites</li>
+                    <li>🏔️ Amazing Hiking</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/greeceAncient.jfif" alt="Greece" class="country-image">
+                <img src="globe/greeceIsland.jfif" alt="Greece" class="country-image">
+                <img src="globe/greeceDiet.jfif" alt="Greece" class="country-image">
+                <h3>Greece 🏺</h3>
+                <ul class="fact-list">
+                    <li>🏛️ Ancient Ruins</li>
+                    <li>🏖️ Beautiful Islands</li>
+                    <li>🥗 Mediterranean Diet</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/brazilFestival.jfif" alt="Brazil" class="country-image">
+                <img src="globe/brazilAmazon.jpg" alt="Brazil" class="country-image">
+                <img src="globe/brazilsoccer.jpg" alt="Brazil" class="country-image">
+                <h3>Brazil ☕</h3>
+                <ul class="fact-list">
+                    <li>🎭 Carnival Festival</li>
+                    <li>🌴 Amazon Rainforest</li>
+                    <li>⚽ Soccer Culture</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/thailandstreetfood.jpg" alt="Thailand" class="country-image">
+                <img src="globe/thailandbeach.jfif" alt="Thailand" class="country-image">
+                <img src="globe/thailandelephants.jpg" alt="Thailand" class="country-image">
+                <h3>Thailand 🏯</h3>
+                <ul class="fact-list">
+                    <li>🍜 Street Food Paradise</li>
+                    <li>🏖️ Tropical Beaches</li>
+                    <li>🐘 Friendly Elephants</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/IslandsPhil1.jpeg" alt="Philippines" class="country-image">
+                <img src="globe/BoracayPhil.jpg" alt="Philippines" class="country-image">
+                <img src="globe/viganPhil.jpg" alt="Philippines" class="country-image">
+                <h3>Philippines🎤</h3>
+                <ul class="fact-list">
+                    <li>🏝️ Stunning Tropical Islands</li>
+                    <li>🌊 World-Class Beach Destinations</li>
+                    <li>🤝 Best torist Spot</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/canadapic1.webp" alt="Canada" class="country-image">
+                <img src="globe/canadapic2.5.jfif" alt="Canada" class="country-image">
+                <img src="globe/canadapic3.jfif" alt="Canada" class="country-image">
+                <h3>Canada 🍁</h3>
+                <ul class="fact-list">
+                    <li>🏔️ Breathtaking Natural Landscapes</li>
+                    <li>❄️ Diverse Wildlife and National Parks</li>
+                    <li>🤝 Multicultural and Welcoming Society</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/egyptPyramids.webp" alt="Egypt" class="country-image">
+                <img src="globe/egyptCar.jpeg" alt="Egypt" class="country-image">
+                <img src="globe/egyptriver.webp" alt="Egypt" class="country-image">
+                <h3>Egypt 🔺</h3>
+                <ul class="fact-list">
+                    <li>🏛️ Ancient Pyramids</li>
+                    <li>🐪 Desert Adventures</li>
+                    <li>🚢 Nile River Cruises</li>
+                </ul>
+            </div>
+
+            <div class="country-card">
+                <img src="globe/icelandAurora.jpg" alt="Iceland" class="country-image">
+                <img src="globe/icelandHotSpring.jpg" alt="Iceland" class="country-image">
+                <img src="globe/icelandhiking.avif" alt="Iceland" class="country-image">
+                <h3>Iceland 🌋</h3>
+                <ul class="fact-list">
+                    <li>🌈 Northern Lights</li>
+                    <li>♨️ Hot Springs</li>
+                    <li>🏔️ Glacier Hiking</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="favorites">
+        <h4>Your Favorite Countries</h4>
+        <div id="favorites-grid" class="country-grid">
+            <!-- Favorited countries will be dynamically added here -->
+        </div>
+    </section>
+
+            <section id="about">
+                <h3> About Our Travel Guide </h3>
+                <p style="text-align: center; font-size: 18px;" class="highlight">
+                    Join us on an adventure to explore these amazing destinations! Each country offers unique experiences, cultures, and unforgettable memories waiting to be made.
+                </p>
+            </section>
+        
+            <section id="contact" class="contact-section">
+                <h1>Contact Us</h1>
+                <div class="contact-form">
+                    <input type="text" id="name" placeholder="Your Name" required>
+                    <input type="email" id="email" placeholder="Your Email" required>
+                    <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                    <button onclick="sendMessage()">Send Message</button>
+                </div>
+            </section>
+            
+            <script>
+                // Favorites functionality
+                const favorites = new Set();
+                const favoritesGrid = document.getElementById('favorites-grid');
+        
+                function toggleFavorite(event) {
+                    const countryCard = event.target.closest('.country-card');
+                    const heartButton = event.target;
+                    
+                    if (heartButton.classList.contains('favorited')) {
+                        // Remove from favorites
+                        heartButton.classList.remove('favorited');
+                        heartButton.textContent = '🤍';
+                        favorites.delete(countryCard.dataset.country);
+                    } else {
+                        // Add to favorites
+                        heartButton.classList.add('favorited');
+                        heartButton.textContent = '❤️';
+                        favorites.add(countryCard.dataset.country);
+                    }
+        
+                    // Update favorites section
+                    updateFavoritesSection();
+                }
+        
+                function updateFavoritesSection() {
+                    // Clear existing favorites
+                    favoritesGrid.innerHTML = '';
+        
+                    // Add favorited countries
+                    favorites.forEach(countryName => {
+                        const originalCard = document.querySelector(`.country-card[data-country="${countryName}"]`);
+                        if (originalCard) {
+                            const clonedCard = originalCard.cloneNode(true);
+                            const heartButton = clonedCard.querySelector('.heart-button');
+                            heartButton.textContent = '❤️';
+                            heartButton.classList.add('favorited');
+                            favoritesGrid.appendChild(clonedCard);
+                        }
+                    });
+                }
+        
+                // Add heart buttons to country cards
+                document.querySelectorAll('.country-card').forEach(card => {
+                    const countryName = card.querySelector('h3').textContent.split(' ')[0];
+                    card.dataset.country = countryName;
+                    
+                    const heartButton = document.createElement('button');
+                    heartButton.textContent = '🤍';
+                    heartButton.classList.add('heart-button');
+                    heartButton.addEventListener('click', toggleFavorite);
+                    
+                    card.style.position = 'relative';
+                    card.appendChild(heartButton);
+                });
+        
+                // Contact form functionality
+                function sendMessage() {
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+        
+                    if (!name || !email || !message) {
+                        alert('Please fill in all fields');
+                        return;
+                    }
+        
+                    // In a real-world scenario, you'd send this to a backend
+                    alert(`Message sent!\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
+                    
+                    // Clear form
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('message').value = '';
+                }
+            </script>
+        </body>
+        </html>
